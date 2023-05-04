@@ -1,0 +1,75 @@
+apiVersion: gateway.networking.k8s.io/v1beta1
+kind: Gateway
+metadata:
+  name: tls-gateway
+  namespace: loadbalancer
+  annotations:
+    cert-manager.io/cluster-issuer: cloudflare-issuer
+spec:
+  gatewayClassName: cilium
+  listeners:
+  - name: https-1
+    protocol: HTTPS
+    port: 443
+    allowedRoutes:
+      namespaces:
+        from: All
+    hostname: "test1.kubed.ovh"
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - kind: Secret
+        group: ""
+        name: my-cert
+  - name: longhorn
+    protocol: HTTPS
+    port: 443
+    allowedRoutes:
+      namespaces:
+        from: All
+    hostname: "longhorn.kubed.ovh"
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - kind: Secret
+        group: ""
+        name: longhorn-cert
+  - name: heimdall
+    protocol: HTTPS
+    port: 443
+    allowedRoutes:
+      namespaces:
+        from: All
+    hostname: "heimdall.kubed.ovh"
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - kind: Secret
+        group: ""
+        name: heimdall-cert
+  - name: argocd
+    protocol: HTTPS
+    port: 443
+    allowedRoutes:
+      namespaces:
+        from: All
+    hostname: "argocd.kubed.ovh"
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - kind: Secret
+        group: ""
+        name: argocd-cert
+  - name: argocd
+    protocol: HTTPS
+    port: 443
+    allowedRoutes:
+      namespaces:
+        from: All
+    hostname: "dashboard.kubed.ovh"
+    tls:
+      mode: Terminate
+      certificateRefs:
+      - kind: Secret
+        group: ""
+        name: dashboard-cert
