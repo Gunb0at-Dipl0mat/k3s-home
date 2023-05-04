@@ -60,7 +60,7 @@ spec:
       - kind: Secret
         group: ""
         name: argocd-cert
-  - name: argocd
+  - name: dashboard
     protocol: HTTPS
     port: 443
     allowedRoutes:
